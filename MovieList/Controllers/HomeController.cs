@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 
 using MovieList.Models;
@@ -23,8 +18,7 @@ namespace MovieList.Controllers
 
         public IActionResult Index()
         {
-            // retrieve from table and set to list
-            var movies = context.Movies.OrderBy(m => m.Name).ToList();
+            var movies = context.Movies.Include(m=>m.Genre).OrderBy(m => m.Name).ToList();
             return View(movies);
         }
 
